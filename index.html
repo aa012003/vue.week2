@@ -1,29 +1,28 @@
 <!DOCTYPE html>
-<html lang="zh-Hant-TW">
-
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Week2</title>
-  <!-- Bootstrap CSS -->
+  <title>Document</title>
+  <!-- 加入bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <!-- css -->
   <style>
     img {
-      object-fit: contain;
-      max-width: 100%;
-    }
+  object-fit: contain;
+  max-width: 100%;
+}
 
-    .primary-image {
-      height: 300px;
-    }
+.primary-image {
+  height: 300px;
+}
 
-    .images {
-      height: 150px;
-    }
+.images {
+  height: 150px;
+}
   </style>
+  
 </head>
-
 <body>
   <div id="app">
     <div class="container">
@@ -49,7 +48,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(item) in products" :key="item.id">
+              <tr v-for="item in products" :id="item.id">
                 <td width="150">{{ item.title }}</td>
                 <td width="120">
                   {{ item.origin_price }}
@@ -62,46 +61,46 @@
                   <span v-else>未啟用</span>
                 </td>
                 <td width="120">
-                  <button type="button" class="btn btn-primary" @click="openProduct(item)">查看細節</button>
+                  <button type="button" class="btn btn-primary" @click="showProduct = item">查看細節</button>
                 </td>
               </tr>
             </tbody>
           </table>
-          <p>目前有 <span>{{ products.length }}</span> 項產品</p>
+          <p>目前有 <span>{{products.length}}</span> 項產品</p>
         </div>
         <div class="col-md-6">
           <h2>單一產品細節</h2>
-          <template v-if="tempProduct.title">
+          <div v-if="showProduct.title">
             <div class="card mb-3">
-              <img :src="tempProduct.imageUrl" class="card-img-top primary-image" alt="主圖">
+              <img :src="showProduct.imageUrl" class="card-img-top primary-image" alt="主圖">
               <div class="card-body">
                 <h5 class="card-title">
-                  {{ tempProduct.title }}
-                  <span class="badge bg-primary ms-2">{{ tempProduct.category }}</span>
+                  {{showProduct.title}}
+                  <span class="badge bg-primary ms-2">{{ showProduct.category }}</span>
                 </h5>
-                <p class="card-text">商品描述：{{ tempProduct.description }}</p>
-                <p class="card-text">商品內容：{{ tempProduct.content }}</p>
+                <p class="card-text">商品描述：{{ showProduct.description }}</p>
+                <p class="card-text">商品內容：{{ showProduct.content }}</p>
                 <div class="d-flex">
-                  <p class="card-text me-2">{{ tempProduct.price }}</p>
-                  <p class="card-text text-secondary"><del>{{ tempProduct.origin_price }}</del></p>
-                  {{ tempProduct.unit }} / 元
+                  <p class="card-text me-2">{{ showProduct.price }}</p>
+                  <p class="card-text text-secondary"><del>{{showProduct.origin_price}}</del></p>
+                  元 / {{ showProduct.unit }}
                 </div>
               </div>
             </div>
-            <template v-for="(image, key) in tempProduct.imagesUrl" :key="key">
-              <img v-if="image" :src="image" :alt="`多圖 ${key+1}`" class="images m-2">
-            </template>
-          </template>
-          <p v-else class="text-secondary">請選擇一個商品查看</p>
+            <span v-for="(img,index) in showProduct.imagesUrl" :key="index">
+              <img :src="img" alt="" class="images m-2">
+            </span>
+          </div>
+          <p class="text-secondary" v-else>請選擇一個商品查看</p>
         </div>
       </div>
     </div>
   </div>
+
   <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
-  <script src="/all.js" type="module"></script>
+  <script src="all.js" type="module"></script>
 </body>
-
 </html>
