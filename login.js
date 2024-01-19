@@ -22,7 +22,7 @@ methods: {
     window.location = 'index.html';
 })
 .catch((err)=>{
-    alert(err.response.data.message);
+    alert(err.data.message)
 });
         }
     }
