@@ -56,8 +56,8 @@ createApp({
       let http ='put';
 
       if(this.isNew){
-        let url = `${this.apiUrl}/api/${this.apiPath}/admin/product`;
-        let http ='post';
+         url = `${this.apiUrl}/api/${this.apiPath}/admin/product`;
+         http ='post';
       }
       
       axios[http](url,{data:this.tempProduct})
