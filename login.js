@@ -19,7 +19,7 @@ methods: {
     const { token,expired } = res.data;
     document.cookie = `joyToken=${token}; expires=${new Date(expired)}; path=/`;
     console.log("login")
-    window.location = 'index.html';
+    window.location = 'products.html';
 })
 .catch((err)=>{
     alert(err.data.message)
