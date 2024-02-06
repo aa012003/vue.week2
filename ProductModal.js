@@ -57,7 +57,7 @@ export default {
                             placeholder="請輸入分類">
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="price" class="form-label">單位</label>
+                            <label for="unit" class="form-label">單位</label>
                             <input id="unit" v-model="tempProduct.unit" type="text" class="form-control" placeholder="請輸入單位">
                         </div>
                         </div>
@@ -84,7 +84,7 @@ export default {
                         </div>
                         <div class="mb-3">
                         <label for="content" class="form-label">說明內容</label>
-                        <textarea id="description" v-model="tempProduct.content" type="text" class="form-control"
+                        <textarea id="content" v-model="tempProduct.content" type="text" class="form-control"
                             placeholder="請輸入說明內容">
                             </textarea>
                         </div>
@@ -121,7 +121,7 @@ export default {
                 </div>
                 <div class="modal-body">
                     是否刪除
-                    <strong class="text-danger"></strong> 商品(刪除後將無法恢復)。
+                    <strong class="text-danger">{{tempProduct.title}}</strong> 商品(刪除後將無法恢復)。
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">

@@ -56,7 +56,7 @@ createApp({
         this.isNew = false;
         productModal.show();
       } else if (status === 'delete') {
-        this.tempProduct = { ...item };
+        this.tempProduct = item;
         delProductModal.show();
       }
     },
