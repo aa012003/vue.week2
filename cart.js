@@ -1,5 +1,18 @@
 import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
 
+Object.keys(VeeValidateRules).forEach(rule => {
+    if (rule !== 'default') {
+      VeeValidate.defineRule(rule, VeeValidateRules[rule]);
+    }
+  });
+
+  VeeValidateI18n.loadLocaleFromURL('zh_TW.json');
+
+  VeeValidate.configure({
+    generateMessage: VeeValidateI18n.localize('zh_TW'),
+    validateOnInput: true, // 調整為：輸入文字時，就立即進行驗證
+  });
+
 const apiUrl = 'https://vue3-course-api.hexschool.io/v2';
 const apiPath = 'joychiang';
 
@@ -36,8 +49,19 @@ const app = createApp({
         return {
             products: [],
             tempProduct: {},
+            form: {
+                user: {
+                  name: '',
+                  email: '',
+                  tel: '',
+                  address: '',
+                },
+                message: '',
+              },
             status:{
-              addCartLoading:''
+              addCartLoading:'',
+              cartQtyLoading:'',
+              removeLoading :''
             },
             carts:{}
         }
@@ -75,33 +99,59 @@ const app = createApp({
                 product_id:item.product_id,
                 qty,
                 };
-                console.log(order);
+                this.status.cartQtyLoading = item.id
                 axios
                     .put(`${apiUrl}/api/${apiPath}/cart/${item.id}` , {data:order})
                     .then(res => {
-                        console.log(res);
+                        this.status.cartQtyLoading = ""
+                        this.getCart()
+                    })
+                    .catch(err => {
+                        alert(err.data.message);
+                    })
+         },
+         removeCartItem(id){
+                this.status.removeLoading = id
+                axios
+                    .delete(`${apiUrl}/api/${apiPath}/cart/${id}`)
+                    .then(res => {
+                        alert(res.data.message);
+                        this.status.removeLoading = ""
                         this.getCart()
                     })
                     .catch(err => {
                         console.log(err);
                     })
          },
+         removeAllCart(){
+            axios
+                .delete(`${apiUrl}/api/${apiPath}/carts`)
+                .then(res => {
+                    alert(res.data.message);
+                    this.getCart()
+                })
+                .catch(err => {
+                    alert(err.data.message);
+                })
+        },
          getCart(){
             axios.get(`${apiUrl}/api/${apiPath}/cart`)
                 .then(res => {
-                    console.log(res);
                     this.carts = res.data.data;
-                    console.log(this.carts);
                 });
             
          }
     },
     components: {
         userModal,
+        VForm: Form,
+        VField: Field,
+        ErrorMessage: ErrorMessage,
     },
     mounted() {
         this.getProducts(),
         this.getCart()
     },
-})
+});
+
 app.mount('#app')
