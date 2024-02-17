@@ -1,4 +1,4 @@
-import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+const { createApp } = Vue
 
 Object.keys(VeeValidateRules).forEach(rule => {
     if (rule !== 'default') {
@@ -47,6 +47,7 @@ const userModal = {
 const app = createApp({
     data() {
         return {
+            defineComponent:'',
             products: [],
             tempProduct: {},
             form: {
@@ -134,6 +135,18 @@ const app = createApp({
                     alert(err.data.message);
                 })
         },
+        createOrder() {
+            const order = this.form;
+            axios
+            .post(`${apiUrl}/api/${apiPath}/order` , {data:order})
+            .then((res) => {
+              alert(res.data.message);
+              this.$refs.form.resetForm();
+              this.getCart();
+            }).catch((err) => {
+              alert(err.response.data.message)
+            });
+          },
          getCart(){
             axios.get(`${apiUrl}/api/${apiPath}/cart`)
                 .then(res => {
@@ -144,14 +157,13 @@ const app = createApp({
     },
     components: {
         userModal,
-        VForm: Form,
-        VField: Field,
-        ErrorMessage: ErrorMessage,
+        VForm: VeeValidate.Form,
+        VField: VeeValidate.Field,
+        ErrorMessage: VeeValidate.ErrorMessage,
     },
     mounted() {
         this.getProducts(),
         this.getCart()
     },
 });
-
 app.mount('#app')
