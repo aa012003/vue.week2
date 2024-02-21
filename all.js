@@ -1,5 +1,5 @@
 import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
-import pagination from './pagination.js';
+import pagination from './paginnation.js';
 import ProductModal from './ProductModal.js'
 let productModal = null;
 let delProductModal = null;
